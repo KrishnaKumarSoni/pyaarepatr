@@ -12,13 +12,14 @@ import {
   Textarea,
   ButtonGroup,
 } from '@chakra-ui/react';
-import { FaEdit, FaShare, FaFacebook, FaTwitter, FaWhatsapp, FaEnvelope, FaSave, FaTimes } from 'react-icons/fa';
+import { FaEdit, FaShare, FaFacebook, FaTwitter, FaWhatsapp, FaEnvelope, FaSave, FaTimes, FaArrowLeft } from 'react-icons/fa';
 import { GeneratedLetter } from '../types/letter';
 import MusicPlayer from '../components/MusicPlayer';
 import Confetti from '../components/Confetti';
 
 export default function LetterView() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [letter, setLetter] = useState<GeneratedLetter | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -33,6 +34,10 @@ export default function LetterView() {
       }
     }
   }, [id]);
+
+  const handleBack = () => {
+    navigate('/');
+  };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -103,14 +108,25 @@ export default function LetterView() {
 
   return (
     <>
-      <Container py={10}>
-        <VStack spacing={6}>
+      <Container maxW="container.lg" py={6}>
+        <VStack spacing={4} align="stretch">
+          <Button
+            leftIcon={<FaArrowLeft />}
+            variant="ghost"
+            onClick={handleBack}
+            alignSelf="flex-start"
+            mb={2}
+            color="white"
+            _hover={{ bg: 'brand.red', color: 'white' }}
+          >
+            Back to Form
+          </Button>
+
           <Box
-            p={10}
+            p={8}
             bg="brand.gray"
             boxShadow="2xl"
             borderRadius="xl"
-            w="100%"
             position="relative"
             onClick={!isEditing ? handleEdit : undefined}
             cursor={!isEditing ? 'pointer' : 'text'}
@@ -118,13 +134,29 @@ export default function LetterView() {
             _hover={!isEditing ? { transform: 'scale(1.01)', boxShadow: '3xl' } : undefined}
             border="1px solid"
             borderColor="brand.red"
+            minH="60vh"
+            maxH="70vh"
+            overflowY="auto"
+            css={{
+              '&::-webkit-scrollbar': {
+                width: '4px',
+              },
+              '&::-webkit-scrollbar-track': {
+                width: '6px',
+                background: 'transparent',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: 'var(--chakra-colors-brand-red)',
+                borderRadius: '24px',
+              },
+            }}
           >
             {isEditing ? (
               <VStack spacing={4}>
                 <Textarea
                   value={editedContent}
                   onChange={(e) => setEditedContent(e.target.value)}
-                  minH="300px"
+                  minH="50vh"
                   fontSize="2xl"
                   fontFamily="letter"
                   autoFocus
@@ -168,7 +200,7 @@ export default function LetterView() {
             )}
           </Box>
 
-          <VStack spacing={4} w="100%">
+          <VStack spacing={4} w="100%" mt={2}>
             <HStack spacing={4} flexWrap="wrap" justify="center">
               <MusicPlayer onPlay={triggerConfetti} />
               <ButtonGroup variant="outline" spacing={2} flexWrap="wrap">
@@ -206,7 +238,6 @@ export default function LetterView() {
           </VStack>
         </VStack>
       </Container>
-
       <Confetti active={showConfetti} />
     </>
   );

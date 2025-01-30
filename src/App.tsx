@@ -5,17 +5,20 @@ import theme from './styles/theme'
 import Home from './pages/Home'
 import LetterView from './pages/LetterView'
 import FloatingHearts from './components/FloatingHearts'
+import { LanguageProvider } from './contexts/LanguageContext'
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Router>
-        <FloatingHearts />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/letter/:id" element={<LetterView />} />
-        </Routes>
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <FloatingHearts />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/letter/:id" element={<LetterView />} />
+          </Routes>
+        </Router>
+      </LanguageProvider>
     </ChakraProvider>
   )
 }

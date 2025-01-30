@@ -1,13 +1,6 @@
-export interface LetterFormData {
-  writerName: string;
-  partnerName: string;
-  gender: string;
-  relationshipDuration: string;
-  sharedMemories: string;
-  personalTraits: string;
-  customMessage: string;
-  writingStyle: string;
-}
+import { LetterFormData } from './letterTypes';
+
+export type { LetterFormData };
 
 export interface GeneratedLetter {
   id: string;

@@ -18,4 +18,7 @@
 16. Limited letter length to 1000 characters
 17. Added writer's name to letter footer
 18. Implemented inline letter editing
-19. Added social sharing buttons (Facebook, Twitter, WhatsApp, Email) 
+19. Added social sharing buttons (Facebook, Twitter, WhatsApp, Email)
+20. Added tabbed interface for different letter types (Partner, Self, Parent)
+21. Created specialized forms for each letter type
+22. Implemented unique prompts for each letter type 
